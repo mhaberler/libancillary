@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <sys/socket.h>
 #include "ancillary.h"
+#include <sys/socket.h>
 
 void child_process(int sock)
 {

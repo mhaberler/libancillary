@@ -13,4 +13,4 @@ libancillary.a: fd_pass.o
 fd_pass.o:
 
 test: test.c libancillary.a
-	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. $< -lancillary
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. $< -lancillary $(LIBS)

@@ -1,3 +1,7 @@
+#ifndef _XPG4_2 /* Solaris sucks */
+# define _XPG4_2
+#endif
+
 extern int ancil_send_fds_with_buffer(int sock, int n_fds, const int *fds, void *buffer);
 /*
  * ancil_send_fds_with_buffer(sock, n_fds, fds, buffer)

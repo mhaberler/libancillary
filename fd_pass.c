@@ -1,7 +1,6 @@
 #include <sys/uio.h>
-#include <sys/socket.h>
-
 #include "ancillary.h"
+#include <sys/socket.h>
 
 static struct cmsghdr *ancil_init_msghdr(struct msghdr *msghdr,
     struct iovec *nothing_ptr, char *nothing, void *buffer, int n)
