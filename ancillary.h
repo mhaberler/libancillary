@@ -1,7 +1,7 @@
 /***************************************************************************
  * libancillary - black magic on Unix domain sockets
  * (C) Nicolas George
- * ancillary.c - public header
+ * ancillary.h - public header
  ***************************************************************************/
 
 /*
