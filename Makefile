@@ -4,6 +4,7 @@ LDFLAGS=
 LIBS=
 AR=ar cr
 RANLIB=ranlib
+RM=rm
 
 OBJECTS=fd_pass.o
 

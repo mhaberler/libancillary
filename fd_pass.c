@@ -1,11 +1,6 @@
-#include <sys/types.h>
-#if defined(__FreeBSD__)
-# include <sys/param.h>
-#endif
 #include <stdlib.h>
-#include <sys/uio.h>
 #include "ancillary.h"
-#include <sys/socket.h>
+#include <sys/uio.h>
 
 static struct cmsghdr *ancil_init_msghdr(struct msghdr *msghdr,
     struct iovec *nothing_ptr, char *nothing, void *buffer, int n)

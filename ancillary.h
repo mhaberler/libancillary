@@ -1,6 +1,19 @@
+#ifndef ANCILLARY_H__
+#define ANCILLARY_H__
+
 #ifndef _XPG4_2 /* Solaris sucks */
 # define _XPG4_2
 #endif
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#if defined(__FreeBSD__)
+# include <sys/param.h>
+#endif
+
+/***************************************************************************
+ * Start of the readable part.
+ ***************************************************************************/
 
 extern int ancil_send_fds_with_buffer(int sock, int n_fds, const int *fds, void *buffer);
 /*
@@ -51,3 +64,5 @@ extern int ancil_recv_fd(int sock, int *fd);
  * ANCIL_FD_BUFFER(42) buffer;
  * ancil_recv_fds_with_buffer(sock, 42, my_fds, &buffer);
  */
+
+#endif /* ANCILLARY_H__ */
