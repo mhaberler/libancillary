@@ -41,7 +41,8 @@
  * functions; this is so that all can fit in one page.
  */
 
-extern int ancil_send_fds_with_buffer(int sock, const int *fds, unsigned n_fds, void *buffer);
+extern int
+ancil_send_fds_with_buffer(int, const int *, unsigned, void *);
 /*
  * ancil_send_fds_with_buffer(sock, n_fds, fds, buffer)
  *
@@ -52,7 +53,8 @@ extern int ancil_send_fds_with_buffer(int sock, const int *fds, unsigned n_fds, 
  * Returns: -1 and errno in case of error, 0 in case of success.
  */
 
-extern int ancil_recv_fds_with_buffer(int sock, int *fds, unsigned *n_fds, void *buffer);
+extern int
+ancil_recv_fds_with_buffer(int, int *, unsigned *, void *);
 /*
  * ancil_recv_fds_with_buffer(sock, n_fds, fds, buffer)
  *
@@ -78,7 +80,8 @@ extern int ancil_recv_fds_with_buffer(int sock, int *fds, unsigned *n_fds, void 
  * ancil_recv_fds_with_buffer(sock, 42, my_fds, &buffer);
  */
 
-extern int ancil_send_fds(int sock, const int *fds, unsigned n_fds);
+extern int
+ancil_send_fds(int, const int *, unsigned);
 /*
  * ancil_send_fds(sock, n_fds, fds)
  *
@@ -88,7 +91,8 @@ extern int ancil_send_fds(int sock, const int *fds, unsigned n_fds);
  * Returns: -1 and errno in case of error, 0 in case of success.
  */
 
-extern int ancil_recv_fds(int sock, int *fd, unsigned *n_fds);
+extern int
+ancil_recv_fds(int, int *, unsigned *);
 /*
  * ancil_recv_fds(sock, n_fds, fds)
  *
@@ -100,14 +104,16 @@ extern int ancil_recv_fds(int sock, int *fd, unsigned *n_fds);
  */
 
 
-extern int ancil_send_fd(int sock, int fd);
+extern int
+ancil_send_fd(int, int);
 /* ancil_recv_fd(sock, fd);
  *
  * Sends the file descriptor fd on the socket sock.
  * Returns : -1 and errno in case of error, 0 in case of success.
  */
 
-extern int ancil_recv_fd(int sock, int *fd);
+extern int
+ancil_recv_fd(int, int *);
 /* ancil_send_fd(sock, &fd);
  *
  * Receives the file descriptor fd from the socket sock.

@@ -30,7 +30,7 @@ CC=gcc
 CFLAGS=-Wall -g -O2
 LDFLAGS=
 LIBS=
-AR=ar cr
+AR=ar
 RANLIB=ranlib
 RM=rm
 CP=cp
@@ -50,7 +50,7 @@ OBJECTS=fd_pass.o
 all: libancillary.a
 
 libancillary.a: $(OBJECTS)
-	$(AR) $@ $(OBJECTS)
+	$(AR) cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
 fd_pass.o: ancillary.h

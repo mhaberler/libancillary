@@ -43,8 +43,9 @@
 
 #include "ancillary.h"
 
-static struct cmsghdr *ancil_init_msghdr(struct msghdr *msghdr,
-    struct iovec *nothing_ptr, char *nothing, void *buffer, int n)
+static struct cmsghdr *
+ancil_init_msghdr(struct msghdr *msghdr, struct iovec *nothing_ptr,
+    char *nothing, void *buffer, int n)
 {
     struct cmsghdr *cmsg;
 
@@ -67,7 +68,8 @@ static struct cmsghdr *ancil_init_msghdr(struct msghdr *msghdr,
     return(cmsg);
 }
 
-int ancil_send_fds_with_buffer(int sock, const int *fds, unsigned n_fds, void *buffer)
+int
+ancil_send_fds_with_buffer(int sock, const int *fds, unsigned n_fds, void *buffer)
 {
     struct msghdr msghdr;
     char nothing = '!';
@@ -81,7 +83,8 @@ int ancil_send_fds_with_buffer(int sock, const int *fds, unsigned n_fds, void *b
     return(sendmsg(sock, &msghdr, 0) >= 0 ? 0 : -1);
 }
 
-int ancil_recv_fds_with_buffer(int sock, int *fds, unsigned *n_fds, void *buffer)
+int
+ancil_recv_fds_with_buffer(int sock, int *fds, unsigned *n_fds, void *buffer)
 {
     struct msghdr msghdr;
     char nothing;
@@ -102,7 +105,8 @@ int ancil_recv_fds_with_buffer(int sock, int *fds, unsigned *n_fds, void *buffer
     return(0);
 }
 
-int ancil_send_fds(int sock, const int *fds, unsigned n_fds)
+int
+ancil_send_fds(int sock, const int *fds, unsigned n_fds)
 {
     ANCIL_FD_BUFFER(ANCIL_MAX_N_FDS) buffer;
 
@@ -110,7 +114,8 @@ int ancil_send_fds(int sock, const int *fds, unsigned n_fds)
     return(ancil_send_fds_with_buffer(sock, fds, n_fds, &buffer));
 }
 
-int ancil_recv_fds(int sock, int *fd, unsigned *n_fds)
+int
+ancil_recv_fds(int sock, int *fd, unsigned *n_fds)
 {
     ANCIL_FD_BUFFER(ANCIL_MAX_N_FDS) buffer;
 
@@ -118,18 +123,19 @@ int ancil_recv_fds(int sock, int *fd, unsigned *n_fds)
     return(ancil_recv_fds_with_buffer(sock, fd, n_fds, &buffer));
 }
 
-int ancil_send_fd(int sock, int fd)
+int
+ancil_send_fd(int sock, int fd)
 {
     ANCIL_FD_BUFFER(1) buffer;
 
     return(ancil_send_fds_with_buffer(sock, &fd, 1, &buffer));
 }
 
-int ancil_recv_fd(int sock, int *fd)
+int
+ancil_recv_fd(int sock, int *fd)
 {
     ANCIL_FD_BUFFER(1) buffer;
     int n_fd = 1;
 
     return(ancil_recv_fds_with_buffer(sock, fd, &n_fd, &buffer));
 }
-
