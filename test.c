@@ -40,7 +40,7 @@
 void child_process(int sock)
 {
     int fd;
-    int fds[3], nfds = 3;
+    int fds[3], nfds;
     char b[] = "This is on the received fd!\n";
 
     if(ancil_recv_fd(sock, &fd)) {
@@ -53,7 +53,8 @@ void child_process(int sock)
     close(fd);
     sleep(2);
 
-    if(ancil_recv_fds(sock, fds, &nfds)) {
+    nfds = ancil_recv_fds(sock, fds, 3);
+    if(nfds < 0) {
 	perror("ancil_recv_fds");
 	exit(1);
     } else {

@@ -84,25 +84,24 @@ ancil_send_fds_with_buffer(int sock, const int *fds, unsigned n_fds, void *buffe
 }
 
 int
-ancil_recv_fds_with_buffer(int sock, int *fds, unsigned *n_fds, void *buffer)
+ancil_recv_fds_with_buffer(int sock, int *fds, unsigned n_fds, void *buffer)
 {
     struct msghdr msghdr;
     char nothing;
     struct iovec nothing_ptr;
     struct cmsghdr *cmsg;
-    int i, n;
+    int i;
 
-    n = *n_fds;
-    cmsg = ancil_init_msghdr(&msghdr, &nothing_ptr, &nothing, buffer, n);
-    for(i = 0; i < n; i++)
+    cmsg = ancil_init_msghdr(&msghdr, &nothing_ptr, &nothing, buffer, n_fds);
+    for(i = 0; i < n_fds; i++)
 	((int *)CMSG_DATA(cmsg))[i] = -1;
     
     if(recvmsg(sock, &msghdr, 0) < 0)
 	return(-1);
-    for(i = 0; i < n; i++)
+    for(i = 0; i < n_fds; i++)
 	fds[i] = ((int *)CMSG_DATA(cmsg))[i];
-    *n_fds = (msghdr.msg_controllen - sizeof(struct cmsghdr)) / sizeof(int);
-    return(0);
+    n_fds = (msghdr.msg_controllen - sizeof(struct cmsghdr)) / sizeof(int);
+    return(n_fds);
 }
 
 int
@@ -115,11 +114,11 @@ ancil_send_fds(int sock, const int *fds, unsigned n_fds)
 }
 
 int
-ancil_recv_fds(int sock, int *fd, unsigned *n_fds)
+ancil_recv_fds(int sock, int *fd, unsigned n_fds)
 {
     ANCIL_FD_BUFFER(ANCIL_MAX_N_FDS) buffer;
 
-    assert(*n_fds <= ANCIL_MAX_N_FDS);
+    assert(n_fds <= ANCIL_MAX_N_FDS);
     return(ancil_recv_fds_with_buffer(sock, fd, n_fds, &buffer));
 }
 
@@ -135,7 +134,6 @@ int
 ancil_recv_fd(int sock, int *fd)
 {
     ANCIL_FD_BUFFER(1) buffer;
-    int n_fd = 1;
 
-    return(ancil_recv_fds_with_buffer(sock, fd, &n_fd, &buffer));
+    return(ancil_recv_fds_with_buffer(sock, fd, 1, &buffer) == 1 ? 0 : -1);
 }

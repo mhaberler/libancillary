@@ -40,7 +40,7 @@ GZIP=gzip -9
 
 NAME=libancillary
 DISTRIBUTION=API COPYING Makefile ancillary.h fd_pass.c test.c
-VERSION=0.9
+VERSION=0.9.1
 
 OBJECTS=fd_pass.o
 

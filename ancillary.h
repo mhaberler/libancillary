@@ -54,7 +54,7 @@ ancil_send_fds_with_buffer(int, const int *, unsigned, void *);
  */
 
 extern int
-ancil_recv_fds_with_buffer(int, int *, unsigned *, void *);
+ancil_recv_fds_with_buffer(int, int *, unsigned, void *);
 /*
  * ancil_recv_fds_with_buffer(sock, n_fds, fds, buffer)
  *
@@ -62,8 +62,8 @@ ancil_recv_fds_with_buffer(int, int *, unsigned *, void *);
  * from the socket sock.
  * buffer is a writeable memory area large enough to hold the required data
  * structures.
- * Returns: -1 and errno in case of error, 0 in case of success, and sets
- * *n_fds to the actual number of received fd..
+ * Returns: -1 and errno in case of error, the actual number of received fd
+ * in case of success
  */
 
 #define ANCIL_FD_BUFFER(n) \
@@ -92,15 +92,15 @@ ancil_send_fds(int, const int *, unsigned);
  */
 
 extern int
-ancil_recv_fds(int, int *, unsigned *);
+ancil_recv_fds(int, int *, unsigned);
 /*
  * ancil_recv_fds(sock, n_fds, fds)
  *
  * Receives *n_fds file descriptors into the array pointed by fds
  * from the socket sock.
  * *n_fds must not be greater than ANCIL_MAX_N_FDS.
- * Returns: -1 and errno in case of error, 0 in case of success, and sets
- * *n_fds to the actual number of received fd.
+ * Returns: -1 and errno in case of error, the actual number of received fd
+ * in case of success.
  */
 
 

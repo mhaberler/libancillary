@@ -55,13 +55,13 @@ Passing file descriptors
 	int ancil_recv_fds(socket, file_descriptors, num_file_descriptors)
 	  int socket: the Unix socket
 	  int *file_descriptors: return array of file descriptors
-	  unsigned *num_file_descriptors: number of file descriptors
+	  unsigned num_file_descriptors: number of file descriptors
+	  Return value: number of received fd for success, -1 for failure
 
-  Receives several file descriptors from a socket, no more than the integer
-  pointed to by num_file_descriptors.
+  Receives several file descriptors from a socket, no more than
+  num_file_descriptors.
   In case of success, the received file descriptors are stored in the array
-  pointed to by file_descriptors, and their actual number is stored in the
-  integer pointed to by num_file_descriptors.
+  pointed to by file_descriptors.
   In case of failure, errno is set; the possible values are the ones of the
   recvmsg(2) system call.
   The maximum number of file descriptors that can be received using this
@@ -69,7 +69,7 @@ Passing file descriptors
   overflow, probably a stack corruption.
   The behavior is undefined if the recv_fds does not match a send_fd* on
   the other side, or if the number of received file descriptors is more than
-  the input value of num_file_descriptors.
+  num_file_descriptors.
 
 
 	int ancil_send_fds_with_buffer(socket, fds, num, buffer)
@@ -89,20 +89,19 @@ Passing file descriptors
 	int ancil_send_fds_with_buffer(socket, fds, num, buffer)
 	  int socket: the Unix socket
 	  int *fds: return array of file descriptors
-	  unsigned *num: number of file descriptors
+	  unsigned num: number of file descriptors
 	  void *buffer: buffer to hold the system data structures
-	  Return value: 0 for success, -1 for failure
+	  Return value: number of received fd for success, -1 for failure
 
-  Receives several file descriptors from a socket, no more than the integer
-  pointed to by num_file_descriptors.
+  Receives several file descriptors from a socket, no more than
+  num_file_descriptors.
   In case of success, the received file descriptors are stored in the array
-  pointed to by file_descriptors, and their actual number is stored in the
-  integer pointed to by num_file_descriptors.
+  pointed to by file_descriptors.
   In case of failure, errno is set; the possible values are the ones of the
   recvmsg(2) system call.
   The behavior is undefined if the recv_fds does not match a send_fd* on
   the other side, or if the number of received file descriptors is more than
-  the input value of num_file_descriptors.
+  num_file_descriptors.
   The buffer argument must point to a memory area large enough to hold the
   system data structures, see ANCIL_FD_BUFFER.
 
