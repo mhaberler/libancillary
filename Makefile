@@ -33,6 +33,14 @@ LIBS=
 AR=ar cr
 RANLIB=ranlib
 RM=rm
+CP=cp
+MKDIR=mkdir
+TAR=tar
+GZIP=gzip -9
+
+NAME=libancillary
+DISTRIBUTION=API COPYING Makefile ancillary.h fd_pass.c test.c
+VERSION=0.1
 
 OBJECTS=fd_pass.o
 
@@ -52,3 +60,9 @@ test: test.c libancillary.a
 
 clean:
 	-$(RM) *.o *.a test 
+
+dist:
+	$(MKDIR) $(NAME)-$(VERSION)
+	$(CP) $(DISTRIBUTION) $(NAME)-$(VERSION)
+	$(TAR) -cf - $(NAME)-$(VERSION) | $(GZIP) > $(NAME)-$(VERSION).tar.gz
+	$(RM) -rf $(NAME)-$(VERSION)
