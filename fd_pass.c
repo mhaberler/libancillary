@@ -1,3 +1,5 @@
+#include <sys/types.h>
+#include <stdlib.h>
 #include <sys/uio.h>
 #include "ancillary.h"
 #include <sys/socket.h>
