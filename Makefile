@@ -56,7 +56,7 @@ libancillary.a: $(OBJECTS)
 fd_pass.o: ancillary.h
 
 test: test.c libancillary.a
-	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. $< -lancillary $(LIBS)
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. test.c -lancillary $(LIBS)
 
 clean:
 	-$(RM) *.o *.a test 
