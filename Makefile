@@ -39,7 +39,7 @@ TAR=tar
 GZIP=gzip -9
 
 NAME=libancillary
-DISTRIBUTION=API COPYING Makefile ancillary.h fd_pass.c test.c
+DISTRIBUTION=API COPYING Makefile ancillary.h fd_send.c fd_recv.c test.c
 VERSION=0.9.1
 
 OBJECTS=fd_send.o fd_recv.o
