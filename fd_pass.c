@@ -1,4 +1,7 @@
 #include <sys/types.h>
+#if defined(__FreeBSD__)
+# include <sys/param.h>
+#endif
 #include <stdlib.h>
 #include <sys/uio.h>
 #include "ancillary.h"
