@@ -123,3 +123,17 @@ Passing file descriptors
   *_with_buffer on n file descriptors.
   To use this macro, you need <sys/types.h> and <sys/socket.h>. Bevare: with
   Solaris, the _XPG4_2 macro must be defined before sys/socket is included.
+
+
+Tuning the compilation
+
+  This library is designed to be included in projects, not installed in
+  /usr/lib. If your project does not use some of the functions, the
+  TUNE_OPTS variable in the Makefile allows not to build them. It is a list
+  of proprocessor options:
+
+  -DNDEBUG: turn assertions off (see assert(3))
+  -DSPARE_SEND_FDS: do not build ancil_send_fds
+  -DSPARE_SEND_FD:  do not build ancil_send_fd
+  -DSPARE_RECV_FDS: do not build ancil_recv_fds
+  -DSPARE_RECV_FD:  do not build ancil_recv_fd

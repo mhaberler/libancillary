@@ -42,10 +42,14 @@ NAME=libancillary
 DISTRIBUTION=API COPYING Makefile ancillary.h fd_pass.c test.c
 VERSION=0.9.1
 
-OBJECTS=fd_pass.o
+OBJECTS=fd_send.o fd_recv.o
+
+TUNE_OPTS=-DNDEBUG
+#TUNE_OPTS=-DNDEBUG \
+	-DSPARE_SEND_FDS -DSPARE_SEND_FD -DSPARE_RECV_FDS -DSPARE_RECV_FD
 
 .c.o:
-	$(CC) -c $(CFLAGS) $<
+	$(CC) -c $(CFLAGS) $(TUNE_OPTS) $<
 
 all: libancillary.a
 
@@ -53,13 +57,14 @@ libancillary.a: $(OBJECTS)
 	$(AR) cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
-fd_pass.o: ancillary.h
+fd_send.o: ancillary.h
+fd_recv.o: ancillary.h
 
 test: test.c libancillary.a
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. test.c -lancillary $(LIBS)
 
 clean:
-	-$(RM) *.o *.a test 
+	-$(RM) -f *.o *.a test 
 
 dist:
 	$(MKDIR) $(NAME)-$(VERSION)
