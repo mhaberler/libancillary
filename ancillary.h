@@ -1,21 +1,17 @@
 #ifndef ANCILLARY_H__
 #define ANCILLARY_H__
 
-#ifndef _XPG4_2 /* Solaris sucks */
-# define _XPG4_2
-#endif
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#if defined(__FreeBSD__)
-# include <sys/param.h>
-#endif
-
 /***************************************************************************
  * Start of the readable part.
  ***************************************************************************/
 
-extern int ancil_send_fds_with_buffer(int sock, int n_fds, const int *fds, void *buffer);
+#define ANCIL_MAX_N_FDS 960
+/*
+ * Maximum number of fds that can be sent or received using the "esay"
+ * functions; this is so that all can fit in one page.
+ */
+
+extern int ancil_send_fds_with_buffer(int sock, const int *fds, unsigned n_fds, void *buffer);
 /*
  * ancil_send_fds_with_buffer(sock, n_fds, fds, buffer)
  *
@@ -26,7 +22,7 @@ extern int ancil_send_fds_with_buffer(int sock, int n_fds, const int *fds, void 
  * Returns: -1 and errno in case of error, 0 in case of success.
  */
 
-extern int ancil_recv_fds_with_buffer(int sock, int n_fds, int *fds, void *buffer);
+extern int ancil_recv_fds_with_buffer(int sock, int *fds, unsigned n_fds, void *buffer);
 /*
  * ancil_recv_fds_with_buffer(sock, n_fds, fds, buffer)
  *
@@ -36,6 +32,9 @@ extern int ancil_recv_fds_with_buffer(int sock, int n_fds, int *fds, void *buffe
  * structures.
  * Returns: -1 and errno in case of error, 0 in case of success.
  */
+
+extern int ancil_send_fds(int sock, const int *fds, unsigned n_fds);
+extern int ancil_recv_fds(int sock, int *fd, unsigned n_fds);
 
 extern int ancil_send_fd(int sock, int fd);
 /* ancil_recv_fd(sock, fd);

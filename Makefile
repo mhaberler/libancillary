@@ -17,7 +17,7 @@ libancillary.a: $(OBJECTS)
 	$(AR) $@ $(OBJECTS)
 	$(RANLIB) $@
 
-fd_pass.o:
+fd_pass.o: ancillary.h
 
 test: test.c libancillary.a
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. $< -lancillary $(LIBS)
