@@ -9,6 +9,9 @@
 
 	#include <ancillary.h>
 
+  At this time, the only ancillary data defined by the Single Unix
+  Specification (v3) is file descriptors.
+
 Passing file descriptors
 
 	int ancil_send_fd(socket, file_descriptor)
