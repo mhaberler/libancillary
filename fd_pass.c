@@ -48,6 +48,9 @@ static struct cmsghdr *ancil_init_msghdr(struct msghdr *msghdr,
 {
     struct cmsghdr *cmsg;
 
+#if defined(__FreeBSD__)
+# warning There may be a warning here; blame your OS.
+#endif
     nothing_ptr->iov_base = &nothing;
     nothing_ptr->iov_len = 1;
     msghdr->msg_name = NULL;
