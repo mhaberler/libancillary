@@ -27,8 +27,8 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 CC=gcc
-CFLAGS=-Wall -g -O2
-LDFLAGS=
+CFLAGS=-Wall -g -O0
+LDFLAGS= -g
 LIBS=
 AR=ar
 RANLIB=ranlib
@@ -44,14 +44,15 @@ VERSION=0.9.1
 
 OBJECTS=fd_send.o fd_recv.o
 
-TUNE_OPTS=-DNDEBUG
+TUNE_OPTS=#-DNDEBUG
+#TUNE_OPTS=-DNDEBUG
 #TUNE_OPTS=-DNDEBUG \
 	-DSPARE_SEND_FDS -DSPARE_SEND_FD -DSPARE_RECV_FDS -DSPARE_RECV_FD
 
 .c.o:
 	$(CC) -c $(CFLAGS) $(TUNE_OPTS) $<
 
-all: libancillary.a
+all: libancillary.a test evserver evclient
 
 libancillary.a: $(OBJECTS)
 	$(AR) cr $@ $(OBJECTS)
@@ -61,13 +62,19 @@ fd_send.o: ancillary.h
 fd_recv.o: ancillary.h
 
 test: test.c libancillary.a
-	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. test.c -lancillary $(LIBS)
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS)  test.c libancillary.a $(LIBS)
 
 clean:
-	-$(RM) -f *.o *.a test 
+	-$(RM) -f *.o *.a test  evserver evclient
 
 dist:
 	$(MKDIR) $(NAME)-$(VERSION)
 	$(CP) $(DISTRIBUTION) $(NAME)-$(VERSION)
 	$(TAR) -cf - $(NAME)-$(VERSION) | $(GZIP) > $(NAME)-$(VERSION).tar.gz
 	$(RM) -rf $(NAME)-$(VERSION)
+
+evclient: evclient.c libancillary.a
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. evclient.c -lancillary $(LIBS)
+
+evserver: evserver.c libancillary.a
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. evserver.c -lancillary $(LIBS)
