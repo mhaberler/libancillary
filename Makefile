@@ -29,7 +29,7 @@
 CC=gcc
 CFLAGS=-Wall -g -O0
 LDFLAGS= -g
-LIBS=
+LIBS=-lczmq
 AR=ar
 RANLIB=ranlib
 RM=rm
@@ -52,7 +52,7 @@ TUNE_OPTS=#-DNDEBUG
 .c.o:
 	$(CC) -c $(CFLAGS) $(TUNE_OPTS) $<
 
-all: libancillary.a test evserver evclient
+all: libancillary.a test evserver evclient czevserver czevclient
 
 libancillary.a: $(OBJECTS)
 	$(AR) cr $@ $(OBJECTS)
@@ -78,3 +78,10 @@ evclient: evclient.c libancillary.a
 
 evserver: evserver.c libancillary.a
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. evserver.c -lancillary $(LIBS)
+
+
+czevserver: czevserver.c libancillary.a
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. czevserver.c -lancillary $(LIBS)
+
+czevclient: czevclient.c libancillary.a
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) -L. czevclient.c -lancillary $(LIBS)
