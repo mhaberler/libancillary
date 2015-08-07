@@ -14,6 +14,11 @@ run evclient in another window
 
 This code uses the libancil library: http://www.normalesup.org/~george/comp/libancillary/
 
+see also:
+http://www.sourcexr.com/articles/2013/10/14/passing-descriptors-between-processes
+http://www.sourcexr.com/articles/2013/10/26/lightweight-inter-process-signaling-with-eventfd
+http://cgit.freedesktop.org/pulseaudio/pulseaudio/tree/src/pulsecore/fdsem.c
+
 Michael Haberler 1/2014
 
 

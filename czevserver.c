@@ -13,17 +13,16 @@
 #include "czev.h"
 
 char *name = "Xeventfd_socket";
-uint64_t u = 4711;
 
 int timer_fn (zloop_t *loop, int timer_id, void *arg)
 {
     int efd = (int) arg;
+    uint64_t u = 1;
     ssize_t s = write(efd, &u, sizeof(uint64_t));
     if (s != sizeof(uint64_t))
 	perror("write");
     else
-	printf("Sent %llu \n", u);
-    u++;
+	printf("signaled\n");
     return 0;
 }
 
@@ -50,7 +49,7 @@ s_socket_event (zloop_t *loop, zmq_pollitem_t *poller, void *arg)
 	printf("request.request_name='%s' request.param=%d\n",
 	       zrq.request_name, zrq.param);
 
-	int efd  = eventfd(0,0);
+	int efd  = eventfd(0,EFD_SEMAPHORE);
 	assert (efd != -1);
 
 	if (ancil_send_fd(cfd, efd)) {
@@ -58,6 +57,11 @@ s_socket_event (zloop_t *loop, zmq_pollitem_t *poller, void *arg)
 	    exit(1);
 	} else {
 	    printf("Sent evfd %d\n", efd);
+
+	    uint64_t u = 3;
+	    assert(write(efd, &u, sizeof(uint64_t)) == sizeof(uint64_t));
+	    printf("Set 3\n"); // counting sema
+	    sleep(1);
 	    // this leaks eventfd's - never closed
 	    zloop_timer (loop, 500, zrq.param, timer_fn, (void *)efd);
 	}
@@ -66,7 +70,7 @@ s_socket_event (zloop_t *loop, zmq_pollitem_t *poller, void *arg)
     return 0;
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     struct sockaddr_un address;
     int socket_fd;
