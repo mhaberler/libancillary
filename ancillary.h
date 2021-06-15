@@ -31,10 +31,6 @@
 #ifndef ANCILLARY_H__
 #define ANCILLARY_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /***************************************************************************
  * Start of the readable part.
  ***************************************************************************/
@@ -123,9 +119,5 @@ ancil_recv_fd(int, int *);
  * Receives the file descriptor fd from the socket sock.
  * Returns : -1 and errno in case of error, 0 in case of success.
  */
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* ANCILLARY_H__ */
